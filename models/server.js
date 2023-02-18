@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { dbconection } = require('../database/config');
 
 
 class Server{
@@ -11,11 +12,18 @@ class Server{
         this.port = process.env.PORT;
         this.usuariosPath = '/api/usuarios';
 
+        // LLAMAR BASE DE DATOS
+        this.conectarDB();
+
         // MIDDLEWARES
         this.middlewares();
 
         // RUTAS
         this.routes();
+    }
+
+    async conectarDB(){
+        await dbconection();
     }
 
     middlewares(){
@@ -31,7 +39,7 @@ class Server{
     }
 
     routes(){
-        // SE DEBE DEFINRI EL PATH PARA LLAMAR LAS ROUTES
+        // SE DEBE DEFINIR EL PATH PARA LLAMAR LAS ROUTES
        this.app.use(this.usuariosPath, require('../routes/usuarios'))
         
     }
