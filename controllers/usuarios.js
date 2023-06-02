@@ -80,7 +80,7 @@ const usuariosDelete = async(req, res)=>{
 
     // NO BORRA EL REGISTRO PERMANENTEMENTE. SOLO LE CAMBIA EL ESTADO A FALSE
     const usuario = await Usuario.findByIdAndUpdate(id, {estado:false});
-
+    
     res.json({
         msg:'DELETE API-CONTROLLER',
         usuario
