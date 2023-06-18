@@ -24,7 +24,7 @@ const jwtValidator = async (req=request, res=response, next )=>{
 
         if (!usuario){
             return res.status(401).json({
-                msg:'Token no valido - Usuario no existeen en BD'
+                msg:'Token no valido - Usuario no existe en en BD'
             })
         }
 
@@ -42,9 +42,20 @@ const jwtValidator = async (req=request, res=response, next )=>{
 
     }catch(err){
         console.log(err);
-        res.status(401).json({
-            msg:'El token no es válido'
-        })
+
+        // Indica la fecha de expiración del token
+        if (err.name == 'TokenExpiredError'){
+            res.status(401).json({
+                msg: `El token de acceso expiró el: ${err.expiredAt}`,
+                // error: err
+            })
+        }else{
+            res.status(401).json({
+                msg:'El token no es válido',
+                // error: err
+            })
+        }
+
     }
 
 
